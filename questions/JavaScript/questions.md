@@ -52,7 +52,7 @@ JavaScript有两种变量类型，一种是基本类型（原始数据类型）�
 
 **null、undefined、undeclared如何判断？**
 - 通过typeof null返回值为"object"，所以无法判断。通过Object.prototype.toString.call(null),返回值为"[object Null]"。
-- 通过typeof null返回值为"undefined"，所以无法判断。通过Object.prototype.toString.call(null),返回值为"[object Undefined]"。
+- 通过typeof undefined"undefined"，所以无法判断。通过Object.prototype.toString.call(undefined),返回值为"[object Undefined]"。
 - 通过typeof一个未声明的变量，返回为"undefined"。通过Object.prototype.toString的方式会报错。通过try/catch或if(安全防范机制)
 进行判断。
 
