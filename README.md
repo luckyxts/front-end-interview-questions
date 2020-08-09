@@ -1,2 +1,1 @@
-<p>前端面试题汇总<p>
-
+[JavaScript 问题](/questions/JavaScript/questions.md)
