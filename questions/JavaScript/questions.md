@@ -8,7 +8,7 @@ title: JavaScript 问题
 - [聊一聊symbol类型。](#聊一聊symbol类型)
 - [null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？](#nullundefined和未声明变量之间有什么区别如何检查判断这些状态值)
 - [==和===的区别是什么?](#的区别是什么)
-- [宿主对象（host objects）和原生对象（native objects）的区别是什么？](#宿主对象host objects和原生对象native objects区别是什么)
+- [宿主对象（host objects）和原生对象（native objects）的区别是什么？](#宿主对象hostobjects和原生对象native objects区别是什么)
 - [匿名函数的典型应用场景是什么？](#匿名函数的典型应用场景是什么)
 - [高阶函数（higher-order）的定义是什么？](#高阶函数higher-order的定义是什么)
 - [聊一聊柯里化函数（curry function）。](#聊一聊柯里化函数curryfunction)
@@ -128,7 +128,7 @@ function add(x, y, f) {
 [[↑] 回到顶部](#目录)
 
 
-### 聊一聊柯里化函数（curry function）？
+### 聊一聊柯里化函数（curry function）。
 
 函数柯里化，是将使用多个参数的一个函数转成一系列使用一个参数或多个参数的函数的技术。
 ```js
@@ -172,7 +172,7 @@ fn("a")("b", "c"); // ["a", "b", "c"]
 [[↑] 回到顶部](#目录)
 
 
-### 高阶函数（higher-order）的定义是什么？
+### 什么是闭包（closure），为什么使用闭包？
 
 当一个函数可以记住并访问当前所在的词法作用域时，就产生了闭包，即使函数是在当前词法作用域之外执行的。
 优点：
