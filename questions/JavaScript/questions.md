@@ -135,6 +135,8 @@ function add(x, y, f) {
 - 参数复用
 - 延迟运行
 
+因为使用了arguments，闭包等技术，会存在性能问题的风险。
+
 ```js
 function add(a, b) {
     return a + b;
