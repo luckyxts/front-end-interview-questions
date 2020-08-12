@@ -6,14 +6,14 @@ title: JavaScript 问题
 ## 目录
 - [说一下JavaScripts的变量类型。](#说一下JavaScripts的变量类型)
 - [聊一聊symbol类型。](#聊一聊symbol类型)
-- [null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？](#null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？)
+- [null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？](#null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值)
 - [==和===的区别是什么?](#==和===的区别是什么?)
-- [宿主对象（host objects）和原生对象（native objects）的区别是什么？](#宿主对象（host objects）和原生对象（native objects）的区别是什么？)
-- [匿名函数的典型应用场景是什么？](#匿名函数的典型应用场景是什么？)
-- [高阶函数（higher-order）的定义是什么？](#高阶函数（higher-order）的定义是什么？)
-- [聊一聊柯里化函数（curry function）。](#聊一聊柯里化函数（curry function）。)
-- [什么是闭包（closure），为什么使用闭包？](#什么是闭包（closure），为什么使用闭包？)
-- [请解释变量提升（hoisting）。](#什请解释变量提升（hoisting）。)
+- [宿主对象（host objects）和原生对象（native objects）的区别是什么？](#宿主对象（host objects）和原生对象（native objects）的区别是什么)
+- [匿名函数的典型应用场景是什么？](#匿名函数的典型应用场景是什么)
+- [高阶函数（higher-order）的定义是什么？](#高阶函数（higher-order）的定义是什么)
+- [聊一聊柯里化函数（curry function）。](#聊一聊柯里化函数（curry function）)
+- [什么是闭包（closure），为什么使用闭包？](#什么是闭包（closure），为什么使用闭包)
+- [请解释变量提升（hoisting）。](#什请解释变量提升（hoisting）)
 
 ### 说一下JavaScripts的变量类型。
 
