@@ -6,14 +6,14 @@ title: JavaScript 问题
 ## 目录
 - [说一下JavaScripts的变量类型。](#说一下JavaScripts的变量类型)
 - [聊一聊symbol类型。](#聊一聊symbol类型)
-- [null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？](#nullundefined和未声明变量之间有什么区别如何检查判断这些状态值)
-- [==和===的区别是什么?](#的区别是什么)
-- [宿主对象（host objects）和原生对象（native objects）的区别是什么？](#宿主对象hostobjects和原生对象native objects区别是什么)
+- [`null`、`undefined`和未声明变量之间有什么区别？如何检查判断这些状态值？](#nullundefined和未声明变量之间有什么区别如何检查判断这些状态值)
+- [`==`和`===`的区别是什么?](#的区别是什么)
+- [宿主对象（host objects）和原生对象（native objects）的区别是什么？](#宿主对象hostobjects和原生对象nativeobjects区别是什么)
 - [匿名函数的典型应用场景是什么？](#匿名函数的典型应用场景是什么)
 - [高阶函数（higher-order）的定义是什么？](#高阶函数higher-order的定义是什么)
 - [聊一聊柯里化函数（curry function）。](#聊一聊柯里化函数curryfunction)
 - [什么是闭包（closure），为什么使用闭包？](#什么是闭包closure为什么使用闭包)
-- [请解释变量提升（hoisting）。](#什请解释变量提升hoisting)
+- [请解释变量提升（hoisting）。](#请解释变量提升hoisting)
 
 ### 说一下JavaScripts的变量类型。
 
@@ -48,7 +48,7 @@ JavaScript有两种变量类型，一种是基本类型（原始数据类型）�
 [[↑] 回到顶部](#目录)
 
 
-### null、undefined、undeclared有什么区别？如何检查判断这些状态值？
+### `null`、`undefined`和未声明变量之间有什么区别？如何检查判断这些状态值？
 
 **null、undefined、undeclared分别是什么？**
 - null常常表示声明了变量，并且主动赋值了null。
@@ -69,7 +69,7 @@ JavaScript有两种变量类型，一种是基本类型（原始数据类型）�
 [[↑] 回到顶部](#目录)
 
 
-### ==和===的区别是什么?
+### `==`和`===`的区别是什么?
 
 ===完全相等，指内存地址相同，不会进行强制类型转换，==会进行强制类型转换，最终toNumber进行数字比较，规则如下：
 - 数字和字符串：将字符串进行toNumber操作
