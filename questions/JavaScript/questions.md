@@ -16,9 +16,9 @@ title: JavaScript 问题
 - [请解释变量提升（hoisting）。](#请解释变量提升hoisting)
 - [使用let、var和const创建变量有什么区别？](#使用letvar和const创建变量有什么区别)
 - [请简述JavaScript中的this。](#请简述JavaScript中的this)
-- [call和.apply, bind有什么区别？](#call和applybind有什么区别)
+- [call、apply和bind有什么区别？](#callapply和bind有什么区别)
 - [聊一聊箭头函数。](#聊一聊箭头函数)
-- [请解释原型继承（prototypal inheritance）的工作原理。](#请解释原型继承prototypalinheritance的工作原理)
+- [请解释原型继承（prototypal inheritance）的工作原理。](#请解释原型继承prototypal-inheritance的工作原理)
 - [new关键字具体执行了什么？](#new关键字具体执行了什么)
 - [ES6的类和ES5的构造函数有什么区别？](#ES6的类和ES5的构造函数有什么区别)
 - [为什么扩展JavaScript内置对象是不好的做法？](#为什么扩展JavaScript内置对象是不好的做法)
@@ -317,7 +317,7 @@ console.log(bar.a);                   // 4
 [[↑] 回到顶部](#目录)
 
 
-### call和.apply, bind有什么区别？
+### call、apply和bind有什么区别？
 
 上述都为显示绑定，.call和.apply直接执行，bind会直接一个函数，并不直接执行。.call将参数一个一个传入，.apply将参数已数组的方式传入。
 个人认为bind是函数柯里化的一种，通过,bind函数将参数保留，在之后延迟执行，将参数传入。如:
@@ -481,8 +481,12 @@ extends为了实现原型继承，最基本的功能是将BoyStudent.prototype._
 - https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/class
 
 
-### 为什么扩展 JavaScript 内置对象是不好的做法？
+[[↑] 回到顶部](#目录)
+
+
+### 为什么扩展JavaScript内置对象是不好的做法？
 
 - 如果都允许扩展或修改prototype的方法，一个项目往往引入多个库，这时候就会产生互相冲突的风险。
 - 如果不用defineProperty的方式定义对象方法，会被枚举出。
 
+[[↑] 回到顶部](#目录)
