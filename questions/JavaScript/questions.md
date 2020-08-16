@@ -22,6 +22,10 @@ title: JavaScript 问题
 - [new关键字具体执行了什么？](#new关键字具体执行了什么)
 - [ES6的类和ES5的构造函数有什么区别？](#ES6的类和ES5的构造函数有什么区别)
 - [为什么扩展JavaScript内置对象是不好的做法？](#为什么扩展JavaScript内置对象是不好的做法)
+- [请尽可能详细地解释Ajax。](#请尽可能详细地解释Ajax)
+- [聊一聊JS的同步和异步。](#聊一聊JS的同步和异步)
+- [什么是回调地狱？](#什么是回调地狱)
+- [聊一聊前端对于异步的解决方案](#聊一聊前端对于异步的解决方案)
 
 ### 说一下JavaScripts的变量类型。
 
@@ -218,7 +222,7 @@ console.log(bar); // ReferenceError: bar is not defined
 let bar = 2;
 console.log(bar); // 2
 ```
-当同事使用var和函数声明时，var声明会被忽略，但是后面的函数声明会覆盖前面的。
+当同时使用var和函数声明时，var声明会被忽略，但是后面的函数声明会覆盖前面的。
 ```js
 foo(); // 3 
 function foo() { console.log( 1 ); } 
@@ -488,5 +492,256 @@ extends为了实现原型继承，最基本的功能是将BoyStudent.prototype._
 
 - 如果都允许扩展或修改prototype的方法，一个项目往往引入多个库，这时候就会产生互相冲突的风险。
 - 如果不用defineProperty的方式定义对象方法，会被枚举出。
+
+[[↑] 回到顶部](#目录)
+
+
+### 请尽可能详细地解释Ajax。
+
+Ajax(asynchronous JavaScript and XML)。使用JavaScript向服务器提出请求并处理响应，不阻塞当前页面。使用XMLHttpRequest这个对象，可以在不重载页面的情况下与Web服务交换数据，即在不需要刷新页面的情况下，产生局部刷新效果。
+ 
+**原生XMLHttpRequest使用方式**
+- 创建XMLHttpRequest对象
+- 调用open函数，填写http请求类型和url
+- 填写请求头等数据
+- 编写回调函数
+- 发出请求
+```js
+let xhr = new XMLHttpRequest();
+xhr.open(`get`, `/gkit/get_user_status?name=1&sex=2`);
+xhr.setRequestHeader(`Content-Type`, `text/plain`);
+xhr.onload = function (){
+    if (this.status === 500){
+        throw new Error(this.responseText);
+    }
+    if (this.status === 200 || this.status === 300){
+        console.log(this.responseText);
+    }
+};
+xhr.send();
+```
+
+###### 参考
+
+
+- https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
+- https://baike.baidu.com/item/AJAX/8425
+
+
+[[↑] 回到顶部](#目录)
+
+
+### 聊一聊JS的同步和异步。
+
+**概述**
+
+JavaScript是一门单线程语言，所以一般情况下，代码是按照语句出现的顺序执行的。但是有时候却不是按照顺序执行。如：
+```js
+setTimeout(function(){
+    console.log('定时器开始啦')
+});
+new Promise(function(resolve){
+console.log('马上执行for循环啦');
+for(var i = 0; i < 10000; i++){
+    i == 99 && resolve();
+}
+}).then(function(){
+    console.log('执行then函数啦')
+});
+console.log('代码执行结束');
+// 马上执行for循环啦
+// 代码执行结束
+// 执行then函数啦
+// 定时器开始啦
+```
+**事件循环**
+
+js是单线程，无法启用多线程任务。那么假如浏览新闻时，一张图片记载很慢，难道我们要一直卡着直到图片完全显示出来吗？因为js将任务分为两类：
+- 同步任务
+- 异步任务
+事件循环：
+- 同步和异步分别进入不同的场所，同步任务进入主线程，异步任务进入Event Table并注册函数。
+- 当指定的事情完成时（如ajax请求完成，setimeout执行时间满足），Event Table会将这个函数移入Event Quene。
+- 主线程内的任务执行完成后，会去Event Quene会读取相应的函数，进入主线程执行。
+- 不断重复上述过程。
+
+**宏任务和微任务**
+
+除了同步任务和异步任务，分为更加细致的宏任务和微任务。
+- 宏任务 sciprt（整体代码）、setTimeout、setInterval、I/O、UI交互、postMessage、setImmediate.
+- 微任务 promise.then、Object.observe、MutaionObserver、process.nextTick
+```js
+setTimeout(function() {
+    console.log('setTimeout');
+})
+
+new Promise(function(resolve) {
+    console.log('promise');
+}).then(function() {
+    console.log('then');
+})
+    console.log('console');
+```
+- 这段代码作为宏任务进入主线程。
+- 遇到setTimeout，那么将其回调函数注册后分发到宏任务Event Quene。
+- 遇到Promise，new Promise立即执行，then函数分发到微任务Event Quene.
+- 执行console.log('console')。
+- 此时整段代码的宏任务执行完毕，执行Event Quene中的微任务，执行then。
+- 完成，第一轮循环结束。开始执行下一轮宏任务，执行setTimeout对应回调。
+- 宏任务和微任务的Event Quene为空，结束。
+
+###### 参考
+
+
+- https://juejin.im/post/6844903512845860872
+- https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html
+
+
+[[↑] 回到顶部](#目录)
+
+
+### 什么是回调地狱？
+
+回调地狱首先存在的问题是函数嵌套造成的极差的代码可读性，但是最重要的问题在于信任问题。回调函数是指将自己的函数，发送其他函数或者第三方函数，让他人决定在何时，何地，调用几次。试想一下，如果你有一个付款的回调函数。你把这个函数交给了第三方如$.get(`/pay`, yourFn)，第三方库在拿到yourFn方法后，可以自行决定调用几次，这时候$.get可能会执行多次，也有可能一次都不行，而你希望你的函数可以执行一次。这就会产生信任问题。
+- 函数嵌套造成的可读性问题
+- 信任问题
+
+
+[[↑] 回到顶部](#目录)
+
+
+### 聊一聊前端对于异步的解决方案。
+
+**callback回调函数**
+
+通过传递函数的方式，来决定调用函数的时机，会有回调地狱问题。
+
+**Promise**
+
+通过.then的方式，解决函数嵌套造成的可读性问题，通过resolve和reject来解决信任问题，.then函数一定并且只会调用在异步结束后调用一次。
+
+**generator**
+
+Generator是一个生成器，生成出一个迭代器，主要是用来控制异步流程的，目前在现有的库中还是比较少看到generator的，目前主要使用generator的是redux-saga这个库，koa1.0也是用generator，但是现在都改为async/await。
+
+```js
+function request(data) {
+    setTimeout( () =>{
+       it.next(data)
+    }, 5000)
+}
+ 
+function* gen() {
+    console.log("generator start");
+    let data1 = yield request("data1");
+    console.log(data1);
+    let data2 = yield request("data2");
+    console.log(data2);
+}
+let it = gen();  // 获得迭代器
+it.next()        // 启动
+// generator start
+// 5秒后，data1
+// 5秒后，data2
+```
+可以看到，使用genertor可以将异步逻辑用同步的方式实现，从而封装一个异步操作或异步容器，这种方式需要一个全局变量，并generator要写到每一个异步回调中执行next。所以有了下面利用Promise的进一步改进。
+```js
+function request(data) {
+    return new Promise((resolve) => {
+        setTimeout( () =>{
+            resolve(data)
+        }, 5000)
+    })
+}
+ 
+function* gen() {
+    console.log("generator start");
+    let data1 = yield request("data1");
+    console.log(data1);
+    let data2 = yield request("data2");
+    console.log(data2);
+}
+let it = gen();  // 获得迭代器
+let { value,done } = it.next()
+value.then((data)=>{ // data值为'2.txt'
+    let { value,done } = it.next(data);
+    return value
+}).then((data)=>{ // data值为'3.txt'
+    let { value,done } = it.next(data);
+    return value
+});
+// generator start
+// 5秒后，data1
+// 5秒后，data2
+```
+要注意的是data1的值是通过it.next(data)中的data传入的，但是it.next(data)函数本省返回的是request的promise对象。但是这样写并没有摆脱promise繁琐的then调用，并且需要手动执行then函数，所以才有了co库。
+```js
+function request(data) {
+    return new Promise((resolve) => {
+        setTimeout( () =>{
+       		resolve(data)
+    	}, 5000)
+    })
+}
+ 
+function* gen() {
+    console.log("generator start");
+    let data1 = yield request("data1");
+    console.log(data1);
+    let data2 = yield request("data2");
+    console.log(data2);
+}
+function co(it){
+    return new Promise((resolve,reject)=>{
+        function next(data){
+            let { value,done } = it.next(data)
+            if(!done){
+                value.then((data)=>{
+                    next(data)
+                },reject)
+            }else{
+                resolve(value)
+            }
+        }
+        next()
+    })
+}
+co(gen()).then( () =>{
+    console.log("generator end");
+});
+// generator start
+// data1
+// data2
+// generator end
+```
+co函数封装了.then执行的方法，让其自动执行。
+**async await**
+async await是ES7提供的新特性，是目前最佳的异步解决方案，个人认为这个其实就是generator + co库。它有如下特性：
+- await只能放在async函数里
+- await后面会是个promise对象，它会等待resolve，reject执行完成，并返回resolve或者reject中的值。
+```js
+async function test(){
+    let data1 = await ajax("data1")
+    console.log(data1);
+    let data2 = await ajax("data2")
+    console.log(data2)
+}
+
+function ajax(data){
+   return new Promise((resolve) =>{
+       setTimeout( () => {
+           resolve(data);
+       }, 5000)
+   })
+}
+// data1
+// data2
+```
+###### 参考
+
+- https://www.liaoxuefeng.com/wiki/1022910821149312/1023024381818112
+- https://www.jianshu.com/p/063f7e490e9a
+- https://www.jianshu.com/p/4aae6d1948dd
+- https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function
 
 [[↑] 回到顶部](#目录)
