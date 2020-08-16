@@ -26,7 +26,7 @@ title: JavaScript 问题
 - [聊一聊JS的同步和异步。](#聊一聊JS的同步和异步)
 - [什么是回调地狱？](#什么是回调地狱)
 - [聊一聊前端对于异步的解决方案](#聊一聊前端对于异步的解决方案)
-- [Promise.all，Promise.race，报错问题](#Promise.allPromise.race报错问题)
+- [Promise.all，Promise.race，报错问题](#PromiseallPromiserace报错问题)
 
 ### 说一下JavaScripts的变量类型。
 
