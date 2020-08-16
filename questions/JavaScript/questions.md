@@ -26,6 +26,7 @@ title: JavaScript 问题
 - [聊一聊JS的同步和异步。](#聊一聊JS的同步和异步)
 - [什么是回调地狱？](#什么是回调地狱)
 - [聊一聊前端对于异步的解决方案](#聊一聊前端对于异步的解决方案)
+- [Promise.all，Promise.race，报错问题](#Promise.allPromise.race报错问题)
 
 ### 说一下JavaScripts的变量类型。
 
@@ -714,8 +715,10 @@ co(gen()).then( () =>{
 // data2
 // generator end
 ```
-co函数封装了.then执行的方法，让其自动执行。
-**async await**
+co函数封装了.then执行的方法，让其自动执行。generator+promise尽管在函数内部实现了同步书写，但是在不借助co库的情况下，在调用generator的时候，依旧无法摆脱繁琐的then函数，所以才有了co库进行了封装。
+
+**asyncawait**
+
 async await是ES7提供的新特性，是目前最佳的异步解决方案，个人认为这个其实就是generator + co库。它有如下特性：
 - await只能放在async函数里
 - await后面会是个promise对象，它会等待resolve，reject执行完成，并返回resolve或者reject中的值。
@@ -743,5 +746,56 @@ function ajax(data){
 - https://www.jianshu.com/p/063f7e490e9a
 - https://www.jianshu.com/p/4aae6d1948dd
 - https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function
+
+[[↑] 回到顶部](#目录)
+
+
+### Promise.all，Promise.race，报错问题
+
+当使用Promise.all，当其中一个请求发生错误，会造成后面不在执行
+```js
+function ajax(data){
+   return new Promise( (resolve, reject) => {
+      setTimeout( () => {
+          if(typeof data === "string"){
+            resolve(data)
+          }
+          else{
+            reject("type err");
+          }
+      }, 2000)
+   }) 
+}
+Promise.all([ajax(1),ajax("2"),ajax(3),ajax("4")]).then( (data) => {
+    console.log(data)
+}).catch( (err) => {console.log(err)})
+// 并不会执行then方法，而是会抱出第一个错误
+// type err
+```
+这就需要每个promise进行异常捕获，可以改写为:
+```js
+function ajax(data){
+   return new Promise( (resolve, reject) => {
+      setTimeout( () => {
+          if(typeof data === "string"){
+            resolve(data)
+          }
+          else{
+            reject("type err");
+          }
+      }, Number(data)*1000)
+   }).catch( (err) => { console.log(err)}) 
+}
+
+Promise.all([ajax(1),ajax("2"),ajax(3),ajax("4")]).then( (data) => {
+    console.log(data);
+}).catch( (err) => {
+    console.log(err);   // 不会走到这里
+})
+// type err
+// type err
+// [undefined, "2", undefined, "4"]
+```
+
 
 [[↑] 回到顶部](#目录)
