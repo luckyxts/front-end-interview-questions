@@ -27,6 +27,9 @@ title: JavaScript 问题
 - [什么是回调地狱？](#什么是回调地狱)
 - [聊一聊前端对于异步的解决方案](#聊一聊前端对于异步的解决方案)
 - [Promise.all，Promise.race，报错问题](#PromiseallPromiserace报错问题)
+- [描述DOM事件流。](#描述DOM事件流)
+- [attribute和property之间有什么区别？](#attribute和property之间有什么区别)
+
 
 ### 说一下JavaScripts的变量类型。
 
@@ -799,3 +802,44 @@ Promise.all([ajax(1),ajax("2"),ajax(3),ajax("4")]).then( (data) => {
 
 
 [[↑] 回到顶部](#目录)
+
+
+### 描述DOM事件流。
+
+事件执行顺序：
+- 捕获阶段
+- 目标阶段
+- 冒泡阶段
+可以通过event.stopPropagation()阻止事件的继续传播。
+
+###### 参考
+
+- https://blog.csdn.net/moguzhale/article/details/53503044
+
+
+[[↑] 回到顶部](#目录)
+
+
+### attribute和property之间有什么区别？
+
+- attribute（特性）是由HTML定义的，所有出现在HTML标签内的描述节点都是attribute特性，可以通过getAttribute获取。
+- property（属性）是DOM对象，可以通过js操作普通对象一样获取。
+```js
+<input id="search" value="foo">
+let input = document.getElementById("search");
+input.value = "foo2";
+input.getAttribute("value");  // "foo"
+// 当对应的property改变的时候，attribute特性value的值为默认值，并不会随之改变
+```
+
+
+###### 参考
+
+- https://segmentfault.com/a/1190000008781121
+
+
+[[↑] 回到顶部](#目录)
+
+
+
+
