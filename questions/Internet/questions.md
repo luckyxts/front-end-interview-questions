@@ -45,6 +45,7 @@ title: CSS 问题
 ***接口中的HTTP请求***
 
 这里是指通过Ajax，api，或者IOS/Android的App的http，client，java的commons-httpclient/okhttp或者curl，postman之类的工具发出的get和post请求。这时候不光能用在前后端交互，也可以用在后端之间的调用。不通过浏览器发送的请求，就没有浏览器那么多限制，例如可以在get请求中添加请求体，也可以在post请求中拼接querystring。如在后台之间互相请求，
+
 // 请求服务器A
 ```js
 request({
@@ -53,14 +54,14 @@ method: `get`,
 json: true,
 body: {msg: `来自服务器A的请求体`},
 }, (err, response, body) => {
-console.log( body);
+    console.log( body);
 });
 ```
 // 接收服务器接口B
 ```js
 app.get('/test', (req, res) => {
-console.log(req.body); // {msg: `来自服务器A的请求体`},
-res.send(`get`)
+    console.log(req.body); // {msg: `来自服务器A的请求体`},
+    res.send(`get`)
 });
 ```
 关于安全性：http都没有提供端到端的加密，以明文的形式才网络上进行传输，中间过程存在大量的节点，包括网关，代理，都可以获取信息并进行篡改。
@@ -212,7 +213,7 @@ app.get('/test', (req, res) => {
 
 ***Access-Control-Allow-Headers***
 
-当浏览器CORS请回发送额外的头信息字段时，需要返回该字段，如上述res填写的该字段是因为，浏览器发送了，res返回了
+当浏览器CORS请回发送额外的头信息字段时，需要返回该字段，如上述res填写的该字段是因为，浏览器发送了
 ```js
 xhr.setRequestHeader('X-Custom-Header', 'value');
 ```
