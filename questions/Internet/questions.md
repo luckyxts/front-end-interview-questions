@@ -243,14 +243,15 @@ res.setHeader('Access-Control-Allow-Credentials', true);
 ***强制缓存***
 
 当浏览器第一次发送请求时，服务器端返回cache-contorl或者expires时，下次请求便不会走到服务器端，直接从disk中获取。需要注意的是，如果客户端请求时将max-age=0传到服务器，将不进行强制缓存。
-cache-control：
-- public: 代理服务器和客户端都可以缓存
-- private: 只有发起请求的浏览器可以进行缓存
-- no-cahce: 不进行强制缓存
-- no-store: 不进行任何缓存
-- max-age: 缓存周期，单位是秒
+- cache-control：
+    - public: 代理服务器和客户端都可以缓存
+    - private: 只有发起请求的浏览器可以进行缓存
+    - no-cahce: 不进行强制缓存
+    - no-store: 不进行任何缓存
+    - max-age: 缓存周期，单位是秒
 
-expires：是一个日期值，`Tue Aug 25 2020 17:28:14 GMT`，如果同时设置cache-control和expires，已cache-control为的缓存时期为准。
+- expires：
+    - 是一个日期值，`Tue Aug 25 2020 17:28:14 GMT`，如果同时设置cache-control和expires，已cache-control为的缓存时期为准。
 
 ***协商缓存***
 
