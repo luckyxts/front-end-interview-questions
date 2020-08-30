@@ -832,7 +832,6 @@ input.getAttribute("value");  // "foo"
 // 当对应的property改变的时候，attribute特性value的值为默认值，并不会随之改变
 ```
 
-
 ###### 参考
 
 - https://segmentfault.com/a/1190000008781121
